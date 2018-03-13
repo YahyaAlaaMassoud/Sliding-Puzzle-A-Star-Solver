@@ -1,3 +1,4 @@
+import numpy as np
 class GameState():
     def __init__(self, state, goal_state, level, parent = None, heuristic_func = "manhattan"):
         self.__state = state
@@ -41,8 +42,8 @@ class GameState():
             for cur_tile in self.__state:
                 cur_idx = self.__state.index(cur_tile)
                 goal_idx = self.__goal_state.index(cur_tile)
-                cur_i, cur_j = cur_idx // 3, cur_idx % 3
-                goal_i, goal_j = goal_idx // 3, goal_idx % 3
+                cur_i, cur_j = cur_idx // int(np.sqrt(len(self.__state))), cur_idx % int(np.sqrt(len(self.__state)))
+                goal_i, goal_j = goal_idx // int(np.sqrt(len(self.__state))), goal_idx % int(np.sqrt(len(self.__state)))
                 self.__heuristic_score += self.calculate_manhattan(cur_i, cur_j, goal_i, goal_j)
         else:
             print('Unknown heuristic function is being used.')

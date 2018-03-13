@@ -57,10 +57,10 @@ class Solver():
             empty_tile = cur_state.index(0)
             i, j = empty_tile // self.__goal_state.shape[0], empty_tile % self.__goal_state.shape[0]
             
-            cur_state = np.array(cur_state).reshape(3, 3)
+            cur_state = np.array(cur_state).reshape(self.__goal_state.shape[0], self.__goal_state.shape[0])
             for x, y in zip(x_axis, y_axis):
                 new_state = np.array(cur_state)
-                if i + x >= 0 and i + x <= 2 and j + y >= 0 and j + y <= 2:
+                if i + x >= 0 and i + x < self.__goal_state.shape[0] and j + y >= 0 and j + y < self.__goal_state.shape[0]:
                     new_state[i, j], new_state[i+x, j+y] = new_state[i+x, j+y], new_state[i, j]
                     game_state = GameState(new_state.flatten().tolist(), self.__goal_state.flatten().tolist(), cur_node.get_level() + 1, cur_node, self.__heuristic_func)
                     if str(game_state.get_state()) not in visited_nodes:
@@ -103,10 +103,10 @@ class Solver():
             empty_tile = cur_state.index(0)
             i, j = empty_tile // self.__goal_state.shape[0], empty_tile % self.__goal_state.shape[0]
             
-            cur_state = np.array(cur_state).reshape(3, 3)
+            cur_state = np.array(cur_state).reshape(self.__goal_state.shape[0], self.__goal_state.shape[0])
             for x, y in zip(x_axis, y_axis):
                 new_state = np.array(cur_state)
-                if i + x >= 0 and i + x <= 2 and j + y >= 0 and j + y <= 2:
+                if i + x >= 0 and i + x < self.__goal_state.shape[0] and j + y >= 0 and j + y < self.__goal_state.shape[0]:
                     new_state[i, j], new_state[i+x, j+y] = new_state[i+x, j+y], new_state[i, j]
                     game_state = GameState(new_state.flatten().tolist(), self.__goal_state.flatten().tolist(), cur_node.get_level() + 1, cur_node, self.__heuristic_func)
                     if str(game_state.get_state()) not in visited_nodes:

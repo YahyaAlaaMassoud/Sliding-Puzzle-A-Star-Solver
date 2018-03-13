@@ -44,7 +44,7 @@ def BFS(init_state, goal_state, max_iter, heuristic):
         init_i, init_j = cur_i, cur_j
         
         for i in range(goal_state.shape[0]):
-            print(np.array(node.get_state()).reshape(3,3)[i, :]) 
+            print(np.array(node.get_state()).reshape(goal_state.shape[0], goal_state.shape[0])[i, :]) 
         print()
     print(solver.get_summary())
 
@@ -81,7 +81,7 @@ def A_star(init_state, goal_state, max_iter, heuristic):
         init_i, init_j = cur_i, cur_j
         
         for i in range(goal_state.shape[0]):
-            print(np.array(node.get_state()).reshape(3,3)[i, :]) 
+            print(np.array(node.get_state()).reshape(goal_state.shape[0], goal_state.shape[0])[i, :]) 
         print()
     print(solver.get_summary())
 
@@ -89,16 +89,19 @@ def main(argv):
     max_iter = 5000
     heuristic = "manhattan"
     algorithm = "a_star"
+    n = 3
     
     try:
-        opts, args = getopt.getopt(argv,"h",["mx=", "heur=", "astar", "bfs"])
+        opts, args = getopt.getopt(argv,"hn:",["mx=", "heur=", "astar", "bfs"])
     except getopt.GetoptError:
-        print('python sliding_puzzle.py --mx <maximum_nodes> --heur <heuristic>')
+        print('python sliding_puzzle.py -h <help> -n <matrix shape ex: n = 3 -> 3x3 matrix> --mx <maximum_nodes> --heur <heuristic> --astar (default algorithm) or --bfs')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('python sliding_puzzle.py --mx <maximum_nodes> --heur <heuristic>')
+            print('python sliding_puzzle.py -h <help> -n <matrix shape ex: n = 3 -> 3x3 matrix> --mx <maximum_nodes> --heur <heuristic> --astar (default algorithm) or --bfs')
             sys.exit()
+        elif opt == '-n':
+            n = int(arg)
         elif opt in ("--mx"):
             max_iter = int(arg)
         elif opt in ("--heur"):
@@ -111,23 +114,23 @@ def main(argv):
     
     while True:
         try:
-            init_state = input("Enter a list of 9 numbers representing the inital state, SEPERATED by WHITE SPACE(1 2 3 etc.): ")
+            init_state = input("Enter a list of " + str(n * n) + " numbers representing the inital state, SEPERATED by WHITE SPACE(1 2 3 etc.): ")
             init_state = init_state.split() 
             for i in range(len(init_state)):
                 init_state[i] = int(init_state[i])
-            goal_state = input("Enter a list of 9 numbers representing the goal state, SEPERATED by WHITE SPACE(1 2 3 etc.): ")
+            goal_state = input("Enter a list of " + str(n * n) + " numbers representing the goal state, SEPERATED by WHITE SPACE(1 2 3 etc.): ")
             goal_state = goal_state.split()
             for i in range(len(goal_state)):
                 goal_state[i] = int(goal_state[i])
-            if len(goal_state) == len(init_state) and len(goal_state) == 9:
+            if len(goal_state) == len(init_state) and len(goal_state) == n * n:
                 break
             else:
                 print("Please re-enter the input again correctly")
         except Exception as ex:
             print(ex)
             
-    init_state = np.array(init_state).reshape(3, 3)
-    goal_state = np.array(goal_state).reshape(3, 3)
+    init_state = np.array(init_state).reshape(n, n)
+    goal_state = np.array(goal_state).reshape(n, n)
     
     if algorithm == "a_star":
         A_star(init_state, goal_state, max_iter, heuristic)
