@@ -5,7 +5,7 @@ Implementation for **A-star and BFS Algorithms** to solve a NxN grid sliding puz
 "State Space")
 
 ### GameState - Class:
-**GameState** class describes any game state in the search space. It takes the following arguments: the ***Current State*** as a list, ***Goal State*** as a list, ***Current Level***, ***Parent State***, and the used ***Heuristic Function***, and once it is initialized, the heuristic score is computer according to the specified fitness function.
+**GameState** class describes any game state in the search space. It takes the following arguments: the ***Current State*** as a list, ***Goal State*** as a list, ***Current Level***, ***Parent State***, and the used ***Heuristic Function***, and once it is initialized, the heuristic score is computed for the current state according to the specified fitness function.
 ```python
 # heuristics that can be used are either "manhattan" for manhattan distance or "misplaced_tiles"
 game_state = GameState(initial_state, goal_state, level, parent, heuristic_function)
